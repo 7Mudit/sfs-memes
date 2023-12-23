@@ -9,7 +9,6 @@ export async function createLoginEntry(email: string, password: string) {
   try {
     connectToDb();
     const user = await User.create({ email, password });
-
     return user;
   } catch (er) {
     console.log(er);

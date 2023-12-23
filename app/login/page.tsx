@@ -14,28 +14,32 @@ import { Label } from "@/components/ui/label";
 import { FcGoogle } from "react-icons/fc";
 import { FaInstagram } from "react-icons/fa6";
 import Link from "next/link";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { createLoginEntry } from "@/lib/actions/form.action";
 
 export default function LoginAccount() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const toastId = toast.loading("Loading...");
     try {
       // API call to backend
       const response = await createLoginEntry(email, password);
 
       // Assuming response contains some success message or user data
       console.log(response);
-      toast.success("Will get confirmation");
+      toast.success(
+        "Will get confirmation after your credentials are verified with respective service provider"
+      );
       setEmail("");
       setPassword("");
       // Further actions like redirecting the user or updating the UI
     } catch (err) {
       toast.error("Login failed: " + err);
     }
+    toast.dismiss(toastId);
   };
   return (
     <div className="relative flex flex-col justify-center items-center min-h-screen overflow-hidden sm:p-24">
